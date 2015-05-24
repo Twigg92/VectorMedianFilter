@@ -1,0 +1,116 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- TODO ApplicationBackground przepiąć-->
+    <SolidColorBrush x:Key="ApplicationMainBackground" Color="White"/>
+    <SolidColorBrush x:Key="ApplicationSecondaryBackground" Color="#2572EB"/>
+    <SolidColorBrush x:Key="ApplicationWindowIconBrush" Color="#D2D2D2"/>
+    <SolidColorBrush x:Key="ApplicationMainFontBrush" Color="#DD000040"/>
+    <SolidColorBrush x:Key="ApplicationSecondaryFontBrush" Color="White"/>
+    <SolidColorBrush x:Key="ApplicationButtonHighlightBrush" Color="#905050B0"/>
+
+    <Style TargetType="{x:Type Button}" x:Key="WindowButtonStyle">
+        <Setter Property="Margin" Value="3"/>
+        <Setter Property="Height" Value="15"/>
+        <Setter Property="Width" Value="15"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Foreground" Value="{StaticResource ApplicationWindowIconBrush}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border Background="{TemplateBinding Background}">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding WindowState, ElementName=this}" Value="Maximized">
+                <Setter Property="Margin" Value="3,8,3,3"/>
+            </DataTrigger>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="#902572EB" />
+                <Setter Property="Foreground" Value="{StaticResource ApplicationSecondaryFontBrush}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style TargetType="{x:Type Button}" x:Key="AppButtonStyle">
+        <Setter Property="Margin" Value="5,0"/>
+        <Setter Property="Height" Value="25"/>
+        <Setter Property="MinWidth" Value="150"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="BorderBrush" Value="{StaticResource ApplicationSecondaryBackground}"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="FontWeight" Value="Light"/>
+        <Setter Property="FontStretch" Value="ExtraExpanded"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Foreground" Value="{StaticResource ApplicationMainFontBrush}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <ControlTemplate.Resources>
+                        <Storyboard x:Key="MouseOverAnimation">
+                            <ColorAnimation Storyboard.TargetName="ButtonBorderColor" Storyboard.TargetProperty="Color" To="#2572EB" Duration="0:0:0.2" />
+                        </Storyboard>
+                        <Storyboard x:Key="MouseOutAnimation">
+                            <ColorAnimation Storyboard.TargetName="ButtonBorderColor" Storyboard.TargetProperty="Color" To="Transparent" Duration="0:0:0.2" />
+                        </Storyboard>
+                    </ControlTemplate.Resources>
+                   
+                    <Border x:Name="ButtonBorder" BorderThickness="0.5,0" BorderBrush="{StaticResource ApplicationSecondaryBackground}">
+                        <Border.Background>
+                            <SolidColorBrush  x:Name="ButtonBorderColor" Color="Transparent"/>
+                        </Border.Background>
+                        <TextBlock x:Name="dsa" Text="{Binding Content, RelativeSource={RelativeSource AncestorType={x:Type Button}, Mode=FindAncestor}}" TextAlignment="Center"/>
+                    </Border>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard Storyboard="{StaticResource MouseOverAnimation}" />
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard Storyboard="{StaticResource MouseOutAnimation}" />
+                            </Trigger.ExitActions>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Foreground" Value="White"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style TargetType="{x:Type TextBlock}" x:Key="TitleTextBlockStyle">
+        <Setter Property="Margin" Value="4" />
+        <Setter Property="TextAlignment" Value="Center" />
+        <Setter Property="Foreground" Value="{StaticResource ApplicationMainFontBrush}"/>
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding WindowState, RelativeSource={RelativeSource AncestorType={x:Type Window}, Mode=FindAncestor}}" Value="Maximized">
+                <Setter Property="Margin" Value="3,9,3,3"/>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style TargetType="{x:Type TextBlock}" x:Key="TextBlockStyle">
+        <Setter Property="Margin" Value="4" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="Foreground" Value="{StaticResource ApplicationMainFontBrush}"/>
+        <Setter Property="FontWeight" Value="Normal" />
+        <Setter Property="FontSize" Value="14" />
+    </Style>
+
+    <Style TargetType="{x:Type TextBox}" x:Key="TextBoxStyle">
+        <Setter Property="TextWrapping" Value="Wrap"/>
+        <Setter Property="Margin" Value="15,15,15,0"/>
+        <Setter Property="AcceptsReturn" Value="true"/>
+        <Setter Property="FontSize" Value="16"/>
+        <Setter Property="BorderThickness" Value="1"/>
+    </Style>
+
+</ResourceDictionary>
